@@ -11,15 +11,15 @@ export default function Input({ socket }) {
         const outgoingMessage = JSON.stringify({
           from: 'HolyDaizy',
           message: message.value,
-        });
-        console.log(outgoingMessage, socket);
+        });;
         socket.send(outgoingMessage);
+        setMessage({value: ''});
         event.preventDefault();
       }
     return (
-        <form name="publish" onSubmit={sendMessage}>
-            <input type="text" name="message" onChange={handleChange}/>
-            <input type="submit" value="Отправить" />
-        </form>
+      <form name="publish" onSubmit={sendMessage}>
+        <input type="text" name="message" value={message.value} onChange={handleChange}/>
+        <input type="submit" value="Отправить" />
+      </form>
     );
 }
