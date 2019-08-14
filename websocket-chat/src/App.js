@@ -1,25 +1,26 @@
 import React from 'react';
-import logo from './logo.svg';
+import Input from './components/MessageInput/MessageInput';
+import MessageList from './components/MessageList/MessageList';
+
 import './App.css';
 
 function App() {
+  let socket = new WebSocket('ws://st-chat.shas.tel');
+  let fullMessageArray = [];
+  let messageArray = [];
+
+  socket.onmessage = function(event) {
+    messageArray = JSON.parse(event.data);
+    fullMessageArray = fullMessageArray.concat(messageArray);
+    console.log(messageArray);
+    console.log(fullMessageArray);
+  };;
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Input socket={socket}/>
+      <MessageList messages={fullMessageArray.slice(-100)}/>           
+    </>
   );
 }
 
