@@ -5,7 +5,6 @@ import { addMessage } from './store/actions/messages';
 import { sortByDate } from './store/actions/filters'
 import MessageInput from './components/MessageInput/MessageInput';
 import MessageList from './components/MessageList/MessageList';
-// import NickInput from './components/NickInput/NickInput';
 import './App.css';
 
 const store = configureStore();
@@ -24,7 +23,6 @@ function App() {
     <Provider store={store}>
       <MessageList socket={socket}/>
       <MessageInput socket={socket}/>
-      {/* <NickInput /> */}
     </Provider>
   );
 }

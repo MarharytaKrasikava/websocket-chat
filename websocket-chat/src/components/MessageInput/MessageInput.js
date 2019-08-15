@@ -39,7 +39,11 @@ export default function Input({ socket }) {
           from: name,
           message: message.value,
         });
-        socket.send(outgoingMessage);
+        if (name) {
+          socket.send(outgoingMessage);
+        } else {
+          alert('Введите имя!');
+        }
         setMessage({value: ''});
         localStorage.setItem('currentNick', nick.value);
         event.preventDefault();
@@ -49,7 +53,7 @@ export default function Input({ socket }) {
       <form name="message" onSubmit={sendMessage}>
         <TextField
           id="outlined-name"
-          label="Your Message:"
+          label="Сообщение:"
           className={classes.textField}
           value={message.value}
           onChange={handleMessageChange}
@@ -57,9 +61,8 @@ export default function Input({ socket }) {
           variant="outlined"
         />
         <TextField
-          required={true}
           id="outlined-name"
-          label="Your Nick:"
+          label="Имя:"
           className={classes.textField}
           value={nick.value}
           onChange={handleNickChange}

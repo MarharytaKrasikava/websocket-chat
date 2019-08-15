@@ -12,14 +12,13 @@ const useStyles = makeStyles(theme => ({
     overflowX: 'hidden',
     margin: '0 auto',
     overflowWrap: 'break-word',
+    backgroundColor: 'white',
   },
   root: {
     width: '60%',
-    float: 'right',
     padding: theme.spacing(3, 2),
     margin:  theme.spacing(3, 2),
     color: 'white',
-    background: 'linear-gradient(145deg, #80deea 10%, #00bcd4 40%)',
     textAlign: 'right',
   },
 }));
@@ -35,7 +34,6 @@ function MessageList(props) {
   return (
     <div className={classes.container}>
       {props.messages.map((message) => {
-        // console.log(localStorage.getItem('currentNick'), message.from)
         return (
         <Paper key={message.id} className={classes.root}
             style={localStorage.getItem('currentNick')
