@@ -4,11 +4,9 @@ import selectMessages from '../../store/selectors/messages';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-// import './MessageList.css';
 
 const useStyles = makeStyles(theme => ({
   container: {
-    width: '70vw',
     height: '90vh',
     overflowY: 'scroll',
     overflowX: 'hidden',
@@ -16,10 +14,13 @@ const useStyles = makeStyles(theme => ({
     overflowWrap: 'break-word',
   },
   root: {
+    width: '45%',
+    float: 'right',
     padding: theme.spacing(3, 2),
     margin:  theme.spacing(3, 2),
     color: 'white',
     background: 'linear-gradient(145deg, #80deea 10%, #00bcd4 40%)',
+    textAlign: 'right',
   },
 }));
 
@@ -27,7 +28,7 @@ function MessageList(props) {
   const classes = useStyles();
   function getDate(ms) {
     const time = new Date(ms);
-    return `Date: ${time.getFullYear()}-${time.getMonth() + 1}-${time.getDate()}, Time: ${time.getHours()}:${time.getMinutes()}`
+    return `Date: ${time.getFullYear()}-${time.getMonth() + 1}-${time.getDate()}, ${time.getHours()}:${time.getMinutes()}`
   }
 
   return (

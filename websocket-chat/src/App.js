@@ -22,7 +22,7 @@ function App() {
   return (
     <Provider store={store}>
       <MessageList socket={socket}/>
-      <Input socket={socket}/> 
+      <Input socket={socket}/>
     </Provider>
   );
 }
