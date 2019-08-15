@@ -20,28 +20,49 @@ export default function Input({ socket }) {
     const [message, setMessage] = React.useState({
         value: '',
     });
+    const [nick, setNick] = React.useState({
+      value: '',
+    });
 
-    function handleChange(event) {
+    function handleMessageChange(event) {
         setMessage({value: event.target.value});
       }
 
+    function handleNickChange(event) {
+      setNick({value: event.target.value});
+    }
+
     function sendMessage (event) {
+        const name = nick.value
+          ? nick.value : localStorage.getItem('currentNick');
         const outgoingMessage = JSON.stringify({
-          from: 'HolyDaizy',
+          from: name,
           message: message.value,
         });
         socket.send(outgoingMessage);
         setMessage({value: ''});
+        localStorage.setItem('currentNick', nick.value);
         event.preventDefault();
       }
+
     return (
-      <form name="publish" onSubmit={sendMessage}>
+      <form name="message" onSubmit={sendMessage}>
         <TextField
           id="outlined-name"
           label="Your Message:"
           className={classes.textField}
           value={message.value}
-          onChange={handleChange}
+          onChange={handleMessageChange}
+          margin="normal"
+          variant="outlined"
+        />
+        <TextField
+          required={true}
+          id="outlined-name"
+          label="Your Nick:"
+          className={classes.textField}
+          value={nick.value}
+          onChange={handleNickChange}
           margin="normal"
           variant="outlined"
         />

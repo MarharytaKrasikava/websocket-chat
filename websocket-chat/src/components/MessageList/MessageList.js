@@ -14,7 +14,7 @@ const useStyles = makeStyles(theme => ({
     overflowWrap: 'break-word',
   },
   root: {
-    width: '45%',
+    width: '60%',
     float: 'right',
     padding: theme.spacing(3, 2),
     margin:  theme.spacing(3, 2),
@@ -26,6 +26,7 @@ const useStyles = makeStyles(theme => ({
 
 function MessageList(props) {
   const classes = useStyles();
+
   function getDate(ms) {
     const time = new Date(ms);
     return `Date: ${time.getFullYear()}-${time.getMonth() + 1}-${time.getDate()}, ${time.getHours()}:${time.getMinutes()}`
@@ -33,8 +34,15 @@ function MessageList(props) {
 
   return (
     <div className={classes.container}>
-      {props.messages.map((message) => (
-        <Paper key={message.id} className={classes.root} elevation={5}>
+      {props.messages.map((message) => {
+        // console.log(localStorage.getItem('currentNick'), message.from)
+        return (
+        <Paper key={message.id} className={classes.root}
+            style={localStorage.getItem('currentNick')
+            && (localStorage.getItem('currentNick') === message.from) ?
+            {float: 'left', background: 'linear-gradient(145deg, #f48fb1 10%, #ad1457 40%)'}
+            : {float: 'right', background: 'linear-gradient(145deg, #80deea 10%, #00bcd4 40%)'}}
+            elevation={5}>
           <Typography variant="h6" component="p">
             {message.message}
           </Typography>
@@ -42,7 +50,7 @@ function MessageList(props) {
             FROM: {message.from}, {getDate(message.time)}
           </Typography>
         </Paper>
-        ))}
+        )})}
     </div>
   )
 }
