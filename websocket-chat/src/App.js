@@ -5,14 +5,15 @@ import { addMessage } from './store/actions/messages';
 import { sortByDate } from './store/actions/filters'
 import MessageInput from './components/MessageInput/MessageInput';
 import MessageList from './components/MessageList/MessageList';
+import ReconnectingWebSocket from 'reconnectingwebsocket';
 import './App.css';
 
 const store = configureStore();
-const socket = new WebSocket('ws://st-chat.shas.tel');
+const socket = new ReconnectingWebSocket('wss://wssproxy.herokuapp.com/', null, { debug: false, reconnectInterval: 3000 });
 
 socket.onmessage = function(event) {
-  const messages = JSON.parse(event.data);
-  messages.slice(-100).forEach((message) => {
+  const messages = JSON.parse(event.data).slice(0, 100);
+  messages.forEach((message) => {
     store.dispatch(addMessage({ ...message }));
   });
   store.dispatch(sortByDate());

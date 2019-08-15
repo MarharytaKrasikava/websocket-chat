@@ -26,11 +26,6 @@ const useStyles = makeStyles(theme => ({
 function MessageList(props) {
   const classes = useStyles();
 
-  function getDate(ms) {
-    const time = new Date(ms);
-    return `Date: ${time.getFullYear()}-${time.getMonth() + 1}-${time.getDate()}, ${time.getHours()}:${time.getMinutes()}`
-  }
-
   return (
     <div className={classes.container}>
       {props.messages.map((message) => {
@@ -38,14 +33,14 @@ function MessageList(props) {
         <Paper key={message.id} className={classes.root}
             style={localStorage.getItem('currentNick')
             && (localStorage.getItem('currentNick') === message.from) ?
-            {float: 'left', background: 'linear-gradient(145deg, #f48fb1 10%, #ad1457 40%)'}
-            : {float: 'right', background: 'linear-gradient(145deg, #80deea 10%, #00bcd4 40%)'}}
+            {float: 'left', background: 'linear-gradient(145deg, #f48fb1, #ad1457)'}
+            : {float: 'right', background: 'linear-gradient(145deg, #80deea, #00bcd4)'}}
             elevation={5}>
           <Typography variant="h6" component="p">
             {message.message}
           </Typography>
           <Typography variant="subtitle2" component="p">
-            FROM: {message.from}, {getDate(message.time)}
+            FROM: {message.from}, {new Date(message.time).toTimeString()}
           </Typography>
         </Paper>
         )})}

@@ -7,6 +7,7 @@ import './MessageInput.css';
 const useStyles = makeStyles(theme => ({
   textField: {
     margin: theme.spacing(1,3),
+    backgroundColor: 'white',
   },
   button: {
     margin: theme.spacing(1,3),
@@ -30,6 +31,7 @@ export default function Input({ socket }) {
 
     function handleNickChange(event) {
       setNick({value: event.target.value});
+      localStorage.setItem('currentNick', event.target.value);
     }
 
     function sendMessage (event) {
@@ -41,11 +43,8 @@ export default function Input({ socket }) {
         });
         if (name) {
           socket.send(outgoingMessage);
-        } else {
-          alert('Введите имя!');
         }
         setMessage({value: ''});
-        localStorage.setItem('currentNick', nick.value);
         event.preventDefault();
       }
 
@@ -59,6 +58,7 @@ export default function Input({ socket }) {
           onChange={handleMessageChange}
           margin="normal"
           variant="outlined"
+          style={{width: '40vw'}}
         />
         <TextField
           id="outlined-name"
