@@ -12,10 +12,31 @@ const useStyles = makeStyles(theme => ({
     color: 'white',
     textAlign: 'right',
   },
+  error: {
+    width: '80%',
+    padding: theme.spacing(3, 2),
+    margin: theme.spacing(3, 2),
+    color: 'white',
+    textAlign: 'center',
+    fontWeight: 'bold',
+    backgroundColor: 'red',
+  }
 }));
 
-export default function Message({message, id, from, time}) {
+export default function Message({ message, id, from, time }) {
   const classes = useStyles();
+  if (id === time) {
+    return (
+      <Paper key={id} className={classes.error}>
+        <Typography variant="h6" component="p">
+          Error!
+      </Typography>
+        <Typography variant="subtitle2" component="p">
+          Server is closed
+      </Typography>
+      </Paper>
+    )
+  }
 
   return (
     <Paper key={id} className={classes.root}

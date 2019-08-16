@@ -2,8 +2,6 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import selectMessages from '../../store/selectors/messages';
 import { makeStyles } from '@material-ui/core/styles';
-/* import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography'; */
 import Message from '../Message/Message';
 
 const useStyles = makeStyles(theme => ({
@@ -27,14 +25,14 @@ function MessageList(props) {
 
   return (
     <div className={classes.container}>
-      {props.messages.map((message) => {
+      {props.messages.map((message, index) => {
         return (
         <Message
           message={message.message}
           id={message.id}
           from={message.from}
           time={message.time}
-          key={message.id}
+          key={index}
         />
         )})}
       <div style={{ float:"left", clear: "both" }} ref={(el) => (bottom = el)}></div>

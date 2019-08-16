@@ -5,11 +5,6 @@ const filtersReducerDefaultState = {
 
 export default (state = filtersReducerDefaultState, action) => {
   switch (action.type) {
-    case 'SET_USER':
-      return {
-        ...state,
-        user: action.user,
-      }
     case 'SORT_BY_DATE':
       return {
         ...state,
