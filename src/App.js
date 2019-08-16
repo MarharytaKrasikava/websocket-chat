@@ -12,8 +12,12 @@ const store = configureStore();
 const socket = new ReconnectingWebSocket('wss://wssproxy.herokuapp.com/', null, { debug: false, reconnectInterval: 3000 });
 
 socket.onmessage = function(event) {
-  const messages = JSON.parse(event.data).slice(0, 100);
-  messages.forEach((message) => {
+  const messages = JSON.parse(event.data);
+  let lastMessages;
+  if (messages[0].time > messages[messages.length - 1].time) {
+    lastMessages = messages.slice(0, 100);
+  } else { lastMessages = messages.slice(-100); }
+  lastMessages.forEach((message) => {
     store.dispatch(addMessage({ ...message }));
   });
   store.dispatch(sortByDate());
