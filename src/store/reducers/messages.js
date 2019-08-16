@@ -9,6 +9,8 @@ export default (state = messagesReducerDefaultState, action) => {
       ];
     case 'REMOVE_MESSAGE':
       return state.filter(({ id }) => (id !== action.id));
+    case 'CLEAR_STORE':
+      return [];
     default:
       return state;
   }

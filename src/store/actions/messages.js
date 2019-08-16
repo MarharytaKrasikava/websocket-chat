@@ -19,3 +19,7 @@ export const removeMessage = ({
   type: 'REMOVE_MESSAGE',
   id
 });
+
+export const clearStore = () => ({
+  type: 'CLEAR_STORE',
+});
