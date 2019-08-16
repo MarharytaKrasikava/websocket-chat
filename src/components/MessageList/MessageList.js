@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import selectMessages from '../../store/selectors/messages';
 import { makeStyles } from '@material-ui/core/styles';
@@ -15,17 +15,15 @@ const useStyles = makeStyles(theme => ({
     overflowWrap: 'break-word',
     backgroundColor: 'white',
   },
-  root: {
-    width: '60%',
-    padding: theme.spacing(3, 2),
-    margin:  theme.spacing(3, 2),
-    color: 'white',
-    textAlign: 'right',
-  },
 }));
 
 function MessageList(props) {
   const classes = useStyles();
+  let bottom;
+
+  useEffect(() => {
+    bottom.scrollIntoView({ behavior: "smooth" });
+  });
 
   return (
     <div className={classes.container}>
@@ -36,8 +34,10 @@ function MessageList(props) {
           id={message.id}
           from={message.from}
           time={message.time}
+          key={message.id}
         />
         )})}
+      <div style={{ float:"left", clear: "both" }} ref={(el) => (bottom = el)}></div>
     </div>
   )
 }

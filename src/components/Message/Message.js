@@ -5,14 +5,6 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles(theme => ({
-  container: {
-    height: '90vh',
-    overflowY: 'scroll',
-    overflowX: 'hidden',
-    margin: '0 auto',
-    overflowWrap: 'break-word',
-    backgroundColor: 'white',
-  },
   root: {
     width: '60%',
     padding: theme.spacing(3, 2),
