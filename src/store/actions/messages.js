@@ -12,3 +12,10 @@ export const addMessage = ({
     time,
   }
 });
+
+export const removeMessage = ({
+  id
+} = {}) => ({
+  type: 'REMOVE_MESSAGE',
+  id
+});

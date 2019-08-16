@@ -15,7 +15,7 @@ const useStyles = makeStyles(theme => ({
   error: {
     width: '80%',
     padding: theme.spacing(3, 2),
-    margin: theme.spacing(3, 2),
+    margin: '0 auto',
     color: 'white',
     textAlign: 'center',
     fontWeight: 'bold',
@@ -32,7 +32,7 @@ export default function Message({ message, id, from, time }) {
           Error!
       </Typography>
         <Typography variant="subtitle2" component="p">
-          Server is closed
+          WebSocket is closed
       </Typography>
       </Paper>
     )
