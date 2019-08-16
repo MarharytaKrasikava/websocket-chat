@@ -35,11 +35,9 @@ socket.onmessage = function (event) {
   } else {
     store.dispatch(addMessage());
   }
-  console.log(document.hidden)
+
   if (document.hidden) {
-    const messages = store.getState().messages;
-    notify(messages[messages.length - 1]);
-    console.log(messages[messages.length - 1]);
+    notify(messages[0]);
   }
 }
 
