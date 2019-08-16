@@ -26,8 +26,8 @@ socket.onmessage = function(event) {
 function App() {
   return (
     <Provider store={store}>
-      <MessageList socket={socket}/>
-      <MessageInput socket={socket}/>
+      <MessageList />
+      <MessageInput socket={socket} />
     </Provider>
   );
 }

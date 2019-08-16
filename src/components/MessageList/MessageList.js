@@ -2,8 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import selectMessages from '../../store/selectors/messages';
 import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
+/* import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography'; */
+import Message from '../Message/Message';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -30,19 +31,12 @@ function MessageList(props) {
     <div className={classes.container}>
       {props.messages.map((message) => {
         return (
-        <Paper key={message.id} className={classes.root}
-            style={localStorage.getItem('currentNick')
-            && (localStorage.getItem('currentNick') === message.from) ?
-            {float: 'left', background: 'linear-gradient(145deg, #f48fb1, #ad1457)'}
-            : {float: 'right', background: 'linear-gradient(145deg, #80deea, #00bcd4)'}}
-            elevation={5}>
-          <Typography variant="h6" component="p">
-            {message.message}
-          </Typography>
-          <Typography variant="subtitle2" component="p">
-            FROM: {message.from}, {new Date(message.time).toTimeString()}
-          </Typography>
-        </Paper>
+        <Message
+          message={message.message}
+          id={message.id}
+          from={message.from}
+          time={message.time}
+        />
         )})}
     </div>
   )
