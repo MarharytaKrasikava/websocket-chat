@@ -2,8 +2,8 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import configureStore from './store/configureStore';
 import { addMessage } from './store/actions/messages';
+import { addMessageArray } from './store/actions/messages';
 import { removeMessage } from './store/actions/messages';
-import { clearStore } from './store/actions/messages';
 import notify from './components/Notifications/Notifications';
 import MessageInput from './components/MessageInput/MessageInput';
 import MessageList from './components/MessageList/MessageList';
@@ -16,24 +16,28 @@ const socket = new ReconnectingWebSocket('wss://wssproxy.herokuapp.com/', null, 
 socket.onmessage = function (event) {
   const messages = JSON.parse(event.data);
 
-  if (messages.length) {
-    if (messages.length > 1) {
-      store.dispatch(clearStore())
-      messages.sort((a, b) => (a.time > b.time ? 1 : -1)).slice(-100).forEach((message) => {
-        store.dispatch(addMessage({ ...message }));
-      });
-    } else {
-      store.dispatch(addMessage({ ...messages[0] }));
+  if (messages.length) { // if messages came without error
+
+    if (messages.length > 1) { // messages came in a bundle, take only last 100 to the store
+      store.dispatch(addMessageArray({messages: messages.sort((a, b) => (a.time > b.time ? 1 : -1)).slice(-100)}))
+    } else { // messages come by one:
+      const storedMessages = store.getState().messages; // chek for spam
+      if (!(storedMessages[storedMessages.length - 1].message === messages[0].message
+        && storedMessages[storedMessages.length - 1].from === messages[0].from
+        && storedMessages[storedMessages.length - 1].time+1 === messages[0].time)) {
+          store.dispatch(addMessage({ ...messages[0] }));
+        }
     }
 
-    const storedMessages = store.getState().messages;
-    if (storedMessages.length >= 100) {
+    const storedMessages = store.getState().messages; //remove extra messages when > 100 in store
+    if (storedMessages.length > 100) {
       store.dispatch(removeMessage({id: storedMessages[0].id}));
     }
     if (document.hidden) {
       notify(messages[messages.length - 1]);
     }
-  } else {
+
+  } else { // if messages came with error, pass error message
     store.dispatch(addMessage());
   }
 }

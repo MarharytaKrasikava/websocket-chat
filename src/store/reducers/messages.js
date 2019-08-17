@@ -7,6 +7,9 @@ export default (state = messagesReducerDefaultState, action) => {
         ...state,
         action.message
       ];
+    case 'ADD_MESSAGE_ARRAY': {
+      return action.messages;
+    }
     case 'REMOVE_MESSAGE':
       return state.filter(({ id }) => (id !== action.id));
     case 'CLEAR_STORE':

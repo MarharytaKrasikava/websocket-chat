@@ -23,6 +23,8 @@ function MessageList(props) {
     bottom.scrollIntoView({ behavior: "smooth" });
   });
 
+  console.log(props.messages)
+
   return (
     <div className={classes.container}>
       {props.messages.map((message, index) => {
