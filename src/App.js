@@ -33,7 +33,7 @@ socket.onmessage = function (event) {
     if (storedMessages.length > 100) {
       store.dispatch(removeMessage({id: storedMessages[0].id}));
     }
-    if (document.hidden) {
+    if (document.hidden) { // add notification when page is hidden
       notify(messages[messages.length - 1]);
     }
 

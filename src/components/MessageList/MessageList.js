@@ -4,7 +4,7 @@ import selectMessages from '../../store/selectors/messages';
 import { makeStyles } from '@material-ui/core/styles';
 import Message from '../Message/Message';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
   container: {
     height: '90vh',
     overflowY: 'scroll',
@@ -22,8 +22,6 @@ function MessageList(props) {
   useEffect(() => {
     bottom.scrollIntoView({ behavior: "smooth" });
   });
-
-  console.log(props.messages)
 
   return (
     <div className={classes.container}>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
@@ -18,35 +18,47 @@ const useStyles = makeStyles(theme => ({
 export default function Input({ socket }) {
     const classes = useStyles();
 
-    const [message, setMessage] = React.useState({
-        value: '',
-    });
-    const [nick, setNick] = React.useState({
-      value: '',
+    const [state, setState] = React.useState({
+        message: '',
+        nick: '',
+        connection: '',
     });
 
     function handleMessageChange(event) {
-        setMessage({value: event.target.value});
+        setState({...state, message: event.target.value});
       }
 
     function handleNickChange(event) {
-      setNick({value: event.target.value});
+      setState({...state, nick: event.target.value});
       localStorage.setItem('currentNick', event.target.value);
     }
 
     function sendMessage (event) {
-        const name = nick.value
-          ? nick.value : localStorage.getItem('currentNick');
+        const name = state.nick
+          ? state.nick : localStorage.getItem('currentNick');
         const outgoingMessage = JSON.stringify({
           from: name,
-          message: message.value,
+          message: state.message,
         });
         if (name) {
           socket.send(outgoingMessage);
         }
-        setMessage({value: ''});
+        setState({...state, message: ''});
         event.preventDefault();
       }
+
+      /* const handleConnectionChange = () => {
+
+      }
+
+      useEffect(() => {
+        window.addEventListener('online', handleConnectionChange);
+        window.addEventListener('offline', handleConnectionChange);
+        return () => {
+          window.removeEventListener('online', handleConnectionChange);
+          window.removeEventListener('offline', handleConnectionChange);
+        }
+      }, []);  */
 
     return (
       <form name="message" onSubmit={sendMessage}>
@@ -54,7 +66,7 @@ export default function Input({ socket }) {
           id="outlined-name"
           label="Сообщение:"
           className={classes.textField}
-          value={message.value}
+          value={state.message}
           onChange={handleMessageChange}
           margin="normal"
           variant="outlined"
@@ -64,7 +76,7 @@ export default function Input({ socket }) {
           id="outlined-name"
           label="Имя:"
           className={classes.textField}
-          value={nick.value}
+          value={state.nick ? state.nick : localStorage.getItem('currentNick')}
           onChange={handleNickChange}
           margin="normal"
           variant="outlined"

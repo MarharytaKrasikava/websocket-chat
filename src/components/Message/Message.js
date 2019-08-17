@@ -40,8 +40,8 @@ export default function Message({ message, id, from, time }) {
 
   return (
     <Paper key={id} className={classes.root}
-      style={localStorage.getItem('currentNick')
-        && (localStorage.getItem('currentNick') === from) ?
+      style={localStorage.getItem('currentNick') // if nickname of an incoming message is equal to nickname in localStorage,
+        && (localStorage.getItem('currentNick') === from) ? // paint it with another color
         { float: 'left', background: 'linear-gradient(145deg, #f48fb1, #ad1457)' }
         : { float: 'right', background: 'linear-gradient(145deg, #80deea, #00bcd4)' }}
       elevation={5}>
