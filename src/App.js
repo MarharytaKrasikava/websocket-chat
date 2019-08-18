@@ -22,20 +22,16 @@ socket.onmessage = function (event) {
       store.dispatch(addMessageArray({messages: messages.sort((a, b) => (a.time > b.time ? 1 : -1)).slice(-100)}))
     } else { // messages come by one:
       store.dispatch(addMessage({ ...messages[0] }));
-      /* const storedMessages = store.getState().messages; // chek for spam
-      if (!(storedMessages[storedMessages.length - 1].message === messages[0].message
-        && storedMessages[storedMessages.length - 1].from === messages[0].from
-        && storedMessages[storedMessages.length - 1].time+1 === messages[0].time)) {
-          store.dispatch(addMessage({ ...messages[0] }));
-        } */
     }
 
     const storedMessages = store.getState().messages; //remove extra messages when > 100 in store
     if (storedMessages.length > 100) {
       store.dispatch(removeMessage({id: storedMessages[0].id}));
     }
-    if (document.hidden) { // add notification when page is hidden
-      notify(messages[messages.length - 1]);
+    if (document.hidden) {
+      if (Date.now() - messages[messages.length - 1].time < 2000 ) { // add notification about the latest (< 2 seconds ago) message
+        notify(messages[messages.length - 1]);                        // when the app is hidden
+      }
     }
 
   } else { // if messages came with error, pass error message
