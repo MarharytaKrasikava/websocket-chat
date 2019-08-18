@@ -28,7 +28,7 @@ function Input(props) {
   });
 
   props.socket.onopen = () => {
-    setState({ ...state, connect: 'online' });
+    setState({ ...state, connect: 'online' }); // check if app is online from the start
   };
 
   function handleMessageChange(event) {
@@ -40,10 +40,9 @@ function Input(props) {
     localStorage.setItem('currentNick', event.target.value);
   }
 
-  const name = state.nick ? state.nick : localStorage.getItem('currentNick');
-
   function sendMessage(event) {
-    if (state.connect === 'online') {
+    const name = state.nick ? state.nick : localStorage.getItem('currentNick');
+    if (state.connect === 'online') { // when app is connected, use send message to server
       const outgoingMessage = JSON.stringify({
         from: name,
         message: state.message
@@ -51,18 +50,18 @@ function Input(props) {
       if (name) {
         props.socket.send(outgoingMessage);
       }
-    } else {
+    } else { // otherwise, save message is the store
       props.dispatch(addOfflineMessage({ from: name, message: state.message }));
     }
-    setState({ ...state, message: '' });
+    setState({ ...state, message: '' }); // clean input
     event.preventDefault();
   }
 
   const handleConnectionChange = event => {
-    const condition = navigator.onLine ? 'online' : 'offline';
+    const condition = navigator.onLine ? 'online' : 'offline'; // listen online/offline status during work
     if (condition === 'online') {
       setState({ ...state, connect: event.type });
-      props.offline.forEach(message => {
+      props.offline.forEach(message => { // if online, send messages stored offline
         props.socket.send(
           JSON.stringify({
             from: message.from,
@@ -71,16 +70,16 @@ function Input(props) {
         );
       });
       props.dispatch(clearOfflineStore());
-    } else {
+    } else { // else, just change state to 'offline'
       setState({ ...state, connect: event.type });
     }
   };
 
   useEffect(() => {
-    window.addEventListener('online', handleConnectionChange);
+    window.addEventListener('online', handleConnectionChange); // imitate componentDidMount
     window.addEventListener('offline', handleConnectionChange);
     return () => {
-      window.removeEventListener('online', handleConnectionChange);
+      window.removeEventListener('online', handleConnectionChange); // imitate componentWillUnmount
       window.removeEventListener('offline', handleConnectionChange);
     };
   // eslint-disable-next-line react-hooks/exhaustive-deps

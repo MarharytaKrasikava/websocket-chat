@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Message({ message, id, from, time }) {
+export default function Message({ message, id, from, time, offline }) {
   const classes = useStyles();
   if (from === message === '') {
     return (
@@ -46,7 +46,7 @@ export default function Message({ message, id, from, time }) {
         : { float: 'right', background: 'linear-gradient(145deg, #80deea, #00bcd4)' }}
       elevation={5}>
       <Typography variant="h6" component="p">
-        {message}
+        {offline} {message}
       </Typography>
       <Typography variant="subtitle2" component="p">
         FROM: {from}, {new Date(time).toTimeString()}

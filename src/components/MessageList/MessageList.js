@@ -6,7 +6,7 @@ import Message from '../Message/Message';
 
 const useStyles = makeStyles(() => ({
   container: {
-    height: '90vh',
+    width: '100%',
     overflowY: 'scroll',
     overflowX: 'hidden',
     margin: '0 auto',
@@ -25,14 +25,24 @@ function MessageList(props) {
 
   return (
     <div className={classes.container}>
-      {props.messages.map((message, index) => {
+      {props.messages.map((message) => {
         return (
         <Message
           message={message.message}
           id={message.id}
           from={message.from}
           time={message.time}
+          key={message.id}
+        />
+        )})}
+        {props.offline.map((message, index) => {
+        return (
+        <Message
+          message={message.message}
+          from={message.from}
+          time={Date.now()}
           key={index}
+          offline="OFFLINE!!!"
         />
         )})}
       <div style={{ float:"left", clear: "both" }} ref={(el) => (bottom = el)}></div>
@@ -43,6 +53,7 @@ function MessageList(props) {
 const mapStateToProps = (state) => {
   return {
     messages: selectMessages(state.messages, state.filters),
+    offline: state.offline,
   }
 };
 

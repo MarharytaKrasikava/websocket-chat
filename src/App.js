@@ -21,13 +21,13 @@ socket.onmessage = function (event) {
     if (messages.length > 1) { // messages came in a bundle, take only last 100 to the store
       store.dispatch(addMessageArray({messages: messages.sort((a, b) => (a.time > b.time ? 1 : -1)).slice(-100)}))
     } else { // messages come by one:
-      const storedMessages = store.getState().messages; // chek for spam
-      // console.log(storedMessages, 'storedMessages')
+      store.dispatch(addMessage({ ...messages[0] }));
+      /* const storedMessages = store.getState().messages; // chek for spam
       if (!(storedMessages[storedMessages.length - 1].message === messages[0].message
         && storedMessages[storedMessages.length - 1].from === messages[0].from
         && storedMessages[storedMessages.length - 1].time+1 === messages[0].time)) {
           store.dispatch(addMessage({ ...messages[0] }));
-        }
+        } */
     }
 
     const storedMessages = store.getState().messages; //remove extra messages when > 100 in store
@@ -46,8 +46,14 @@ socket.onmessage = function (event) {
 function App() {
   return (
     <Provider store={store}>
+      <header className='header'>
+        <h1>Welcome to Websocket Chat!</h1>
+      </header>
       <MessageList />
       <MessageInput socket={socket} />
+      <footer>
+        <p>&copy; by HolyDaizy</p>
+      </footer>
     </Provider>
   );
 }

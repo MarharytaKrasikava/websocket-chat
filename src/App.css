@@ -1,4 +1,37 @@
 #root {
-  padding: 10vh 20vw;
-  background: linear-gradient(145deg, white, #80deea)
+  padding: 5vh 20vw;
+  background: linear-gradient(145deg, white, #80deea);
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  box-sizing: border-box;
+  height: 100vh;
+  overflow: hidden;
+}
+
+h1 {
+  background-color: #c2185b;
+  color: white;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 4em;
+  margin: 0;
+  margin-bottom: 3%;
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  left: 10%;
+  color: #c2185b;
+}
+
+@media(max-width: 1024px) {
+  #root {
+    padding: 3vh 10vw;
+  }
+
+  h1 {
+    font-size: 2em;
+  }
 }
