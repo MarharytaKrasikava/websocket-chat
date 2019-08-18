@@ -22,6 +22,7 @@ socket.onmessage = function (event) {
       store.dispatch(addMessageArray({messages: messages.sort((a, b) => (a.time > b.time ? 1 : -1)).slice(-100)}))
     } else { // messages come by one:
       const storedMessages = store.getState().messages; // chek for spam
+      // console.log(storedMessages, 'storedMessages')
       if (!(storedMessages[storedMessages.length - 1].message === messages[0].message
         && storedMessages[storedMessages.length - 1].from === messages[0].from
         && storedMessages[storedMessages.length - 1].time+1 === messages[0].time)) {

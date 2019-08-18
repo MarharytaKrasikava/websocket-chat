@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function Message({ message, id, from, time }) {
   const classes = useStyles();
-  if (id === time) {
+  if (from === message === '') {
     return (
       <Paper key={id} className={classes.error}>
         <Typography variant="h6" component="p">
