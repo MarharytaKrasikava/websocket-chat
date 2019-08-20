@@ -15,9 +15,8 @@ const socket = new ReconnectingWebSocket('wss://wssproxy.herokuapp.com/', null, 
 
 socket.onmessage = function (event) {
   const messages = JSON.parse(event.data);
-
   if (messages.length) { // if messages came without error
-
+    // console.log(messages);
     if (messages.length > 1) { // messages came in a bundle, take only last 100 to the store
       store.dispatch(addMessageArray({messages: messages.sort((a, b) => (a.time > b.time ? 1 : -1)).slice(-100)}))
     } else { // messages come by one:

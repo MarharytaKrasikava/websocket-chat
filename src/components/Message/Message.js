@@ -1,5 +1,5 @@
 import React from 'react';
-
+import uuid from 'uuid';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -25,15 +25,15 @@ const useStyles = makeStyles(theme => ({
 
 export default function Message({ message, id, from, time, offline }) {
   const classes = useStyles();
-  if (from === message === '') {
+  if (id === '') {
     return (
-      <Paper key={id} className={classes.error}>
+      <Paper key={uuid()} className={classes.error}>
         <Typography variant="h6" component="p">
           Error!
-      </Typography>
-        <Typography variant="subtitle2" component="p">
-          WebSocket is closed
-      </Typography>
+        </Typography>
+          <Typography variant="subtitle2" component="p">
+            WebSocket is closed
+        </Typography>
       </Paper>
     )
   }
