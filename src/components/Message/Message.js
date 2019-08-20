@@ -32,7 +32,7 @@ export default function Message({ message, id, from, time, offline }) {
           Error!
         </Typography>
           <Typography variant="subtitle2" component="p">
-            WebSocket is closed
+            WebSocket is Empty
         </Typography>
       </Paper>
     )

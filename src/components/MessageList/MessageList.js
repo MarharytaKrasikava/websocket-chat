@@ -29,10 +29,10 @@ function MessageList(props) {
         return (
         <Message
           message={message.message}
-          id={message.id}
+          id={message.id ? message.id : message.id+message.time}
           from={message.from}
           time={message.time}
-          key={message.id}
+          key={message.id ? message.id : message.id+message.time}
         />
         )})}
         {props.offline.map((message, index) => {
